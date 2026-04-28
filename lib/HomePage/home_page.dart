@@ -1,21 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:res_q_route/auth/ambulance.dart';
-import 'package:res_q_route/auth/fire_brigade.dart';
-import 'package:res_q_route/auth/police.dart';
-
+import 'package:res_q_route/theme/app_themes.dart';
 import 'package:res_q_route/auth/login/amb_signin.dart';
 import 'package:res_q_route/auth/login/fire_signin.dart';
 import 'package:res_q_route/auth/login/police_signin.dart';
-
-// ─── COLORS ───────────────────────────────────────
-const _bg = Color(0xFFF7F6F3);
-const _ink = Color(0xFF1A1A1A);
-const _muted = Color(0xFF999792);
-const _border = Color(0xFFE0DDD5);
-const _white = Colors.white;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,27 +20,23 @@ class _HomePageState extends State<HomePage>
   static const _services = [
     _Service(
       title: 'Ambulance',
-      subtitle: 'Medical emergency',
-      icon: Icons.local_hospital,
-      accent: Color(0xFFD63031),
-      tint: Color(0xFFFBEAEA),
+      subtitle: 'Critical Medical Response',
+      icon: Icons.local_hospital_rounded,
+      accent: AppThemes.primaryRed,
       page: AmbulanceSignInPage(),
     ),
     _Service(
       title: 'Fire Brigade',
-      subtitle: 'Fire & rescue',
-      icon: Icons.local_fire_department,
-      accent: Color(0xFFF57C00),
-      tint: Color(0xFFFFF3E0),
+      subtitle: 'Emergency Fire & Rescue',
+      icon: Icons.local_fire_department_rounded,
+      accent: AppThemes.primaryOrange,
       page: FireSignInPage(),
- 
     ),
     _Service(
       title: 'Police',
-      subtitle: 'Law enforcement',
-      icon: Icons.local_police,
-      accent: Color(0xFF1565C0),
-      tint: Color(0xFFE3F2FD),
+      subtitle: 'Public Safety & Law',
+      icon: Icons.local_police_rounded,
+      accent: AppThemes.primaryBlue,
       page: PoliceSignInPage(),
     ),
   ];
@@ -65,6 +50,12 @@ class _HomePageState extends State<HomePage>
     )..repeat(reverse: true);
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   void _go(BuildContext context, Widget page) {
     HapticFeedback.lightImpact();
     Navigator.push(context, MaterialPageRoute(builder: (_) => page));
@@ -72,142 +63,171 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Scaffold(
-      body: Container(
-        // 🔥 GRADIENT BACKGROUND
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFF7F6F3), Color(0xFFEDEBE6)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+      backgroundColor: AppThemes.bgLight,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 32),
 
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 24),
-
-                // 🔴 TOP BAR
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'RESQROUTE',
-                            style: GoogleFonts.inter(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: _muted,
-                              letterSpacing: 2,
-                            ),
-                          ),
-                          Text(
-                            'Command Center',
-                            style: GoogleFonts.inter(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w700,
-                              color: _ink,
-                            ),
-                          ),
-                        ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'RESQROUTE',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800,
+                          color: AppThemes.primaryBlue,
+                          letterSpacing: 2.5,
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Command Center',
+                        style: theme.textTheme.headlineMedium,
+                      ),
+                    ],
+                  ),
 
-                    // 🔥 Animated Status Dot
-                    AnimatedBuilder(
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.black.withOpacity(0.05)),
+                    ),
+                    child: AnimatedBuilder(
                       animation: _controller,
                       builder: (_, __) {
                         return Container(
-                          width: 40,
-                          height: 40,
+                          width: 12,
+                          height: 12,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.green.withOpacity(
-                              0.6 + (_controller.value * 0.4),
+                              0.5 + (_controller.value * 0.5),
                             ),
-                          ),
-                          child: const Icon(
-                            Icons.power,
-                            color: Colors.white,
-                            size: 18,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.green.withOpacity(0.3),
+                                blurRadius: 8 * _controller.value,
+                                spreadRadius: 2 * _controller.value,
+                              ),
+                            ],
                           ),
                         );
                       },
                     ),
-                  ],
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppThemes.primaryBlue,
+                  borderRadius: BorderRadius.circular(AppThemes.radiusLg),
                 ),
-
-                const SizedBox(height: 20),
-
-                // 🔥 LIVE STATUS
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.circle, color: Colors.green, size: 10),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'All emergency units active · Real-time monitoring enabled',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 13,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.security_rounded, color: Colors.white, size: 20),
+                        const SizedBox(width: 10),
+                        Text(
+                          'SYSTEM STATUS: OPTIMAL',
+                          style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white.withOpacity(0.9),
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1,
                           ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'All emergency response units are synchronized and operational across the sector.',
+                      style: GoogleFonts.inter(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 13,
+                        height: 1.5,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
 
-                const SizedBox(height: 30),
+              const SizedBox(height: 40),
 
-                Text(
-                  "SELECT SERVICE",
-                  style: GoogleFonts.inter(
-                    fontSize: 11,
-                    letterSpacing: 1.5,
-                    color: _muted,
-                  ),
+              Text(
+                "DISPATCH PORTALS",
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w800,
+                  color: AppThemes.textMuted,
+                  letterSpacing: 1.5,
                 ),
+              ),
 
-                const SizedBox(height: 15),
+              const SizedBox(height: 20),
 
-                // 🔥 SERVICES
-                ..._services.map(
-                  (s) => Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: _ServiceCard(
+              Expanded(
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: _services.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 16),
+                  itemBuilder: (context, index) {
+                    final s = _services[index];
+                    return _ServiceCard(
                       service: s,
                       onTap: () => _go(context, s.page),
+                    );
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 24),
+              
+              Center(
+                child: Column(
+                  children: [
+                    Text(
+                      "RESQROUTE CORE PROTOCOL",
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        color: AppThemes.textMuted.withOpacity(0.4),
+                        letterSpacing: 1.5,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "v3.0 Secure Deployment",
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        color: AppThemes.textMuted.withOpacity(0.6),
+                      ),
+                    ),
+                  ],
                 ),
+              ),
 
-                const Spacer(),
-
-                Center(
-                  child: Text(
-                    "AI Powered Emergency Routing System",
-                    style: GoogleFonts.inter(fontSize: 11, color: _border),
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-              ],
-            ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),
@@ -215,81 +235,73 @@ class _HomePageState extends State<HomePage>
   }
 }
 
-// ─── SERVICE CARD ────────────────────────────────
-class _ServiceCard extends StatefulWidget {
+class _ServiceCard extends StatelessWidget {
   final _Service service;
   final VoidCallback onTap;
 
   const _ServiceCard({required this.service, required this.onTap});
 
   @override
-  State<_ServiceCard> createState() => _ServiceCardState();
-}
-
-class _ServiceCardState extends State<_ServiceCard> {
-  bool _pressed = false;
-
-  @override
   Widget build(BuildContext context) {
-    final s = widget.service;
-
-    return GestureDetector(
-      onTapDown: (_) => setState(() => _pressed = true),
-      onTapUp: (_) {
-        setState(() => _pressed = false);
-        widget.onTap();
-      },
-      onTapCancel: () => setState(() => _pressed = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.all(18),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AppThemes.radiusXl),
+      child: Container(
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: _white,
-          borderRadius: BorderRadius.circular(18),
-
-          // 🔥 SHADOW + GLOW
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(AppThemes.radiusXl),
+          border: Border.all(color: Colors.black.withOpacity(0.05)),
           boxShadow: [
             BoxShadow(
-              color: s.accent.withOpacity(0.15),
+              color: Colors.black.withOpacity(0.02),
               blurRadius: 20,
               offset: const Offset(0, 8),
             ),
           ],
-
-          border: Border.all(color: _border),
         ),
         child: Row(
           children: [
             Container(
-              width: 52,
-              height: 52,
+              width: 60,
+              height: 60,
               decoration: BoxDecoration(
-                color: s.tint,
-                borderRadius: BorderRadius.circular(14),
+                color: service.accent.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(AppThemes.radiusLg),
               ),
-              child: Icon(s.icon, color: s.accent, size: 26),
+              child: Icon(service.icon, color: service.accent, size: 28),
             ),
-
-            const SizedBox(width: 16),
-
+            const SizedBox(width: 18),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    s.title,
-                    style: GoogleFonts.inter(
+                    service.title.toUpperCase(),
+                    style: GoogleFonts.plusJakartaSans(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w800,
+                      color: AppThemes.textDark,
+                      letterSpacing: 0.5,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(s.subtitle, style: GoogleFonts.inter(color: _muted)),
+                  Text(
+                    service.subtitle,
+                    style: GoogleFonts.inter(
+                      fontSize: 13,
+                      color: AppThemes.textMuted,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
               ),
             ),
-
-            const Icon(Icons.arrow_forward_ios, size: 16),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: AppThemes.textMuted.withOpacity(0.3),
+              size: 28,
+            ),
           ],
         ),
       ),
@@ -297,13 +309,11 @@ class _ServiceCardState extends State<_ServiceCard> {
   }
 }
 
-// ─── MODEL ───────────────────────────────────────
 class _Service {
   final String title;
   final String subtitle;
   final IconData icon;
   final Color accent;
-  final Color tint;
   final Widget page;
 
   const _Service({
@@ -311,7 +321,6 @@ class _Service {
     required this.subtitle,
     required this.icon,
     required this.accent,
-    required this.tint,
     required this.page,
   });
 }

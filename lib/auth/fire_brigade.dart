@@ -1,14 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-const _bg = Color(0xFFF6F5F2);
-const _orange = Color(0xFFF57C00);
-const _ink = Color(0xFF121212);
-const _muted = Color(0xFF8A887F);
-const _border = Color(0xFFE4E1D9);
-const _white = Colors.white;
+import 'package:res_q_route/theme/app_themes.dart';
 
 class FireSignUpPage extends StatefulWidget {
   const FireSignUpPage({super.key});
@@ -19,270 +12,203 @@ class FireSignUpPage extends StatefulWidget {
 
 class _FireSignUpPageState extends State<FireSignUpPage> {
   final station = TextEditingController();
-  final officer = TextEditingController();
+  final incharge = TextEditingController();
   final area = TextEditingController();
-
-  final username = TextEditingController(); // ✅ new
-  final password = TextEditingController(); // ✅ new
-  final confirmPassword = TextEditingController(); // ✅ new
-  final contact = TextEditingController(); // ✅ new
-
+  final username = TextEditingController();
+  final password = TextEditingController();
+  final confirmPassword = TextEditingController();
+  final contact = TextEditingController();
   final city = TextEditingController();
-  final state = TextEditingController();
   final pin = TextEditingController();
 
   bool hidePassword = true;
   bool hideConfirmPassword = true;
 
-  int _focusedIndex = -1;
-
-  // 🔥 CREATE USER FUNCTION
   void createUser() {
     if (password.text != confirmPassword.text) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Passwords do not match")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Passwords do not match"), backgroundColor: Colors.redAccent),
+      );
       return;
     }
-
-    if (!contact.text.contains('@')) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Enter a valid email address")));
-      return;
-    }
-
-    // Dummy Success behavior
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Sign Up Done Successfully")),
+      const SnackBar(content: Text("Registration Successful"), backgroundColor: Colors.green),
     );
-
-    Navigator.pop(context); // back to login
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: _bg,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 22),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 40),
-
-              const _Header(),
-
-              const SizedBox(height: 28),
-
-              const _Subtitle(),
-
-              const SizedBox(height: 30),
-
-              // 🔥 FIRE FIELDS
-              _Field("Station Name", station, 0, Icons.local_fire_department),
-              _Field("Officer Name", officer, 1, Icons.person_outline),
-              _Field("Area Covered", area, 2, Icons.map_outlined),
-
-              // 🔐 AUTH FIELDS
-              _Field("Username", username, 3, Icons.account_circle_outlined),
-
-              _Field(
-                "Password",
-                password,
-                4,
-                Icons.lock_outline,
-                isPassword: true,
-                hideText: hidePassword,
-                toggle: () {
-                  setState(() => hidePassword = !hidePassword);
-                },
-              ),
-
-              _Field(
-                "Confirm Password",
-                confirmPassword,
-                5,
-                Icons.lock_outline,
-                isPassword: true,
-                hideText: hideConfirmPassword,
-                toggle: () {
-                  setState(() => hideConfirmPassword = !hideConfirmPassword);
-                },
-              ),
-
-              _Field(
-                "Email / Mobile",
-                contact,
-                6,
-                Icons.phone_android_outlined,
-              ),
-
-              _Field("City", city, 7, Icons.location_city_outlined),
-              _Field("State", state, 8, Icons.public_outlined),
-
-              _Field(
-                "Area PIN Code",
-                pin,
-                9,
-                Icons.location_on_outlined,
-                isPin: true,
-              ),
-
-              const SizedBox(height: 20),
-
-              // 🔥 CTA CONNECTED
-              GestureDetector(
-                onTap: createUser,
-                child: Container(
-                  height: 56,
+    return Theme(
+      data: AppThemes.fireTheme,
+      child: Scaffold(
+        backgroundColor: AppThemes.bgLight,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppThemes.textDark),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: _orange,
-                    borderRadius: BorderRadius.circular(14),
+                    color: AppThemes.primaryOrange.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Center(
+                  child: const Icon(Icons.fire_truck_rounded, size: 32, color: AppThemes.primaryOrange),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  "Fire Registration",
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 36,
+                    fontWeight: FontWeight.w800,
+                    color: AppThemes.textDark,
+                    letterSpacing: -1,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "Establish unit identity and suppression protocols for advanced emergency operations.",
+                  style: GoogleFonts.manrope(
+                    fontSize: 15,
+                    color: AppThemes.textMuted,
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 40),
+
+                _sectionTitle("STATION PROFILE"),
+                _buildField(hint: "Station Name", controller: station, icon: Icons.shield_outlined),
+                _buildField(hint: "Station Incharge", controller: incharge, icon: Icons.person_outline),
+                _buildField(hint: "Service Zone", controller: area, icon: Icons.explore_outlined),
+                
+                const SizedBox(height: 24),
+                _sectionTitle("AUTHENTICATION"),
+                _buildField(hint: "Unit Badge ID", controller: username, icon: Icons.badge_outlined),
+                _buildField(
+                  hint: "Access Password",
+                  controller: password,
+                  icon: Icons.lock_outline,
+                  isPassword: true,
+                  hideText: hidePassword,
+                  toggle: () => setState(() => hidePassword = !hidePassword),
+                ),
+                _buildField(
+                  hint: "Confirm Password",
+                  controller: confirmPassword,
+                  icon: Icons.lock_reset_rounded,
+                  isPassword: true,
+                  hideText: hideConfirmPassword,
+                  toggle: () => setState(() => hideConfirmPassword = !hideConfirmPassword),
+                ),
+                
+                const SizedBox(height: 24),
+                _sectionTitle("LOCATION & CONTACT"),
+                _buildField(hint: "Command Contact", controller: contact, icon: Icons.contact_emergency_outlined),
+                Row(
+                  children: [
+                    Expanded(child: _buildField(hint: "City", controller: city, icon: Icons.business_rounded)),
+                    const SizedBox(width: 12),
+                    Expanded(child: _buildField(hint: "PIN", controller: pin, icon: Icons.pin_drop_rounded, isPin: true)),
+                  ],
+                ),
+
+                const SizedBox(height: 48),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: createUser,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppThemes.primaryOrange,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppThemes.radiusLg)),
+                    ),
                     child: Text(
-                      "Create User",
-                      style: GoogleFonts.inter(color: _white),
+                      "REGISTER FIRE UNIT",
+                      style: GoogleFonts.plusJakartaSans(
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 1,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ),
-              ),
-
-              const SizedBox(height: 20),
-
-              const _Footer(),
-
-              const SizedBox(height: 25),
-            ],
+                const SizedBox(height: 40),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _Field(
-    String hint,
-    TextEditingController controller,
-    int index,
-    IconData icon, {
-    bool isPin = false,
+  Widget _sectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16, left: 4),
+      child: Text(
+        title,
+        style: GoogleFonts.plusJakartaSans(
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
+          color: AppThemes.textMuted,
+          letterSpacing: 2,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildField({
+    required String hint,
+    required TextEditingController controller,
+    required IconData icon,
     bool isPassword = false,
+    bool isPin = false,
     bool hideText = false,
     VoidCallback? toggle,
   }) {
-    final isFocused = _focusedIndex == index;
-
     return Padding(
-      padding: const EdgeInsets.only(bottom: 14),
-      child: Focus(
-        onFocusChange: (value) {
-          setState(() {
-            _focusedIndex = value ? index : -1;
-          });
-        },
-        child: TextField(
-          controller: controller,
-          obscureText: isPassword ? hideText : false,
-          keyboardType: isPin ? TextInputType.number : TextInputType.text,
-          inputFormatters: isPin
-              ? [FilteringTextInputFormatter.digitsOnly]
-              : [],
-          maxLength: isPin ? 6 : null,
-          decoration: InputDecoration(
-            counterText: "",
-            hintText: hint,
-            prefixIcon: Icon(icon, color: isFocused ? _orange : _muted),
-
-            // 🔥 PASSWORD TOGGLE
-            suffixIcon: isPassword
-                ? IconButton(
-                    icon: Icon(
-                      hideText ? Icons.visibility : Icons.visibility_off,
-                      size: 18,
-                    ),
-                    onPressed: toggle,
-                  )
-                : null,
-
-            filled: true,
-            fillColor: _white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(color: _border),
-            ),
+      padding: const EdgeInsets.only(bottom: 20),
+      child: TextField(
+        controller: controller,
+        obscureText: isPassword ? hideText : false,
+        style: GoogleFonts.manrope(fontWeight: FontWeight.w600, color: AppThemes.textDark, fontSize: 15),
+        keyboardType: isPin ? TextInputType.number : TextInputType.text,
+        inputFormatters: isPin ? [FilteringTextInputFormatter.digitsOnly] : [],
+        maxLength: isPin ? 6 : null,
+        decoration: InputDecoration(
+          counterText: "",
+          hintText: hint,
+          hintStyle: TextStyle(color: AppThemes.textMuted.withOpacity(0.3), fontSize: 14),
+          prefixIcon: Icon(icon, color: AppThemes.primaryOrange.withOpacity(0.3), size: 20),
+          suffixIcon: isPassword
+              ? IconButton(
+                  icon: Icon(
+                    hideText ? Icons.visibility_off_rounded : Icons.visibility_rounded,
+                    color: AppThemes.textMuted.withOpacity(0.5),
+                    size: 20,
+                  ),
+                  onPressed: toggle,
+                )
+              : null,
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(AppThemes.radiusLg),
+            borderSide: BorderSide.none,
           ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         ),
-      ),
-    );
-  }
-}
-
-// 🔥 HEADER
-class _Header extends StatelessWidget {
-  const _Header();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 52,
-          height: 52,
-          decoration: BoxDecoration(
-            color: _orange,
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: const Icon(Icons.local_fire_department, color: Colors.white),
-        ),
-        const SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "FIRE BRIGADE",
-              style: GoogleFonts.inter(color: _orange, fontSize: 11),
-            ),
-            Text(
-              "Station Registration",
-              style: GoogleFonts.inter(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-// 🔹 SUBTITLE
-class _Subtitle extends StatelessWidget {
-  const _Subtitle();
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      "Create station account to activate emergency response.",
-      style: GoogleFonts.inter(color: _muted),
-    );
-  }
-}
-
-// (CTA widget removed from here as it's built inline above)
-
-// 🔹 FOOTER
-class _Footer extends StatelessWidget {
-  const _Footer();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        "Secure network · Fire node",
-        style: GoogleFonts.inter(color: _border, fontSize: 11),
       ),
     );
   }
