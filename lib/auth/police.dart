@@ -22,10 +22,10 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
   final incharge = TextEditingController();
   final area = TextEditingController();
 
-  final username = TextEditingController(); // ✅ new
-  final password = TextEditingController(); // ✅ new
-  final confirmPassword = TextEditingController(); // ✅ new
-  final contact = TextEditingController(); // ✅ new
+  final username = TextEditingController();
+  final password = TextEditingController();
+  final confirmPassword = TextEditingController();
+  final contact = TextEditingController();
 
   final city = TextEditingController();
   final state = TextEditingController();
@@ -36,28 +36,26 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
 
   int _focusedIndex = -1;
 
-  // 🔥 CREATE USER FUNCTION
   void createUser() {
     if (password.text != confirmPassword.text) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Passwords do not match")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Passwords do not match")),
+      );
       return;
     }
 
     if (!contact.text.contains('@')) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Enter a valid email address")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Enter a valid email address")),
+      );
       return;
     }
 
-    // Dummy Success behavior
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Sign Up Done Successfully")),
     );
 
-    Navigator.pop(context); // back to login
+    Navigator.pop(context);
   }
 
   @override
@@ -71,23 +69,15 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 40),
-
               const _Header(),
-
               const SizedBox(height: 28),
-
               const _Subtitle(),
-
               const SizedBox(height: 30),
 
-              // 🚓 FIELDS
               _Field("Station Name", station, 0, Icons.location_city_outlined),
-
               _Field("Station Incharge", incharge, 1, Icons.person_outline),
-
               _Field("Area Covered", area, 2, Icons.map_outlined),
 
-              // 🔥 NEW AUTH FIELDS
               _Field("Username", username, 3, Icons.account_circle_outlined),
 
               _Field(
@@ -97,9 +87,7 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
                 Icons.lock_outline,
                 isPassword: true,
                 hideText: hidePassword,
-                toggle: () {
-                  setState(() => hidePassword = !hidePassword);
-                },
+                toggle: () => setState(() => hidePassword = !hidePassword),
               ),
 
               _Field(
@@ -109,20 +97,13 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
                 Icons.lock_outline,
                 isPassword: true,
                 hideText: hideConfirmPassword,
-                toggle: () {
-                  setState(() => hideConfirmPassword = !hideConfirmPassword);
-                },
+                toggle: () => setState(
+                  () => hideConfirmPassword = !hideConfirmPassword,
+                ),
               ),
 
-              _Field(
-                "Email / Mobile",
-                contact,
-                6,
-                Icons.phone_android_outlined,
-              ),
-
+              _Field("Email / Mobile", contact, 6, Icons.phone_android_outlined),
               _Field("City", city, 7, Icons.location_city_outlined),
-
               _Field("State", state, 8, Icons.public_outlined),
 
               _Field(
@@ -135,7 +116,6 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
 
               const SizedBox(height: 20),
 
-              // 🔥 CTA CONNECTED
               GestureDetector(
                 onTap: createUser,
                 child: Container(
@@ -154,9 +134,7 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
               ),
 
               const SizedBox(height: 20),
-
               const _Footer(),
-
               const SizedBox(height: 25),
             ],
           ),
@@ -181,9 +159,7 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
       padding: const EdgeInsets.only(bottom: 14),
       child: Focus(
         onFocusChange: (value) {
-          setState(() {
-            _focusedIndex = value ? index : -1;
-          });
+          setState(() => _focusedIndex = value ? index : -1);
         },
         child: TextField(
           controller: controller,
@@ -197,8 +173,6 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
             counterText: "",
             hintText: hint,
             prefixIcon: Icon(icon, color: isFocused ? _blue : _muted),
-
-            // 🔥 PASSWORD TOGGLE
             suffixIcon: isPassword
                 ? IconButton(
                     icon: Icon(
@@ -208,7 +182,6 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
                     onPressed: toggle,
                   )
                 : null,
-
             filled: true,
             fillColor: _white,
             border: OutlineInputBorder(
@@ -222,7 +195,6 @@ class _PoliceSignUpPageState extends State<PoliceSignUpPage> {
   }
 }
 
-// 🔴 HEADER
 class _Header extends StatelessWidget {
   const _Header();
 
@@ -261,7 +233,6 @@ class _Header extends StatelessWidget {
   }
 }
 
-// 🔹 SUBTITLE
 class _Subtitle extends StatelessWidget {
   const _Subtitle();
 
@@ -274,9 +245,6 @@ class _Subtitle extends StatelessWidget {
   }
 }
 
-// (CTA widget removed from here as it's built inline above)
-
-// 🔹 FOOTER
 class _Footer extends StatelessWidget {
   const _Footer();
 
