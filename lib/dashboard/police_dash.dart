@@ -13,14 +13,13 @@ import 'package:res_q_route/screens/dispatch_communications.dart';
 import 'package:res_q_route/screens/destination_selection.dart';
 import 'package:res_q_route/screens/live_navigation.dart';
 
-// ─── Design Tokens ──────────────────────────────────────────────────────────
+// Tokens
 const _kBg = Color(0xFFEEF0F8);
 const _kNavy = Color(0xFF1A1F6E);
 const _kNavyLight = Color(0xFF2D3480);
 const _kRed = Color(0xFFD32F2F);
 const _kCardBg = Colors.white;
 const _kMuted = Color(0xFF6B728A);
-// ────────────────────────────────────────────────────────────────────────────
 
 class PoliceDashboard extends StatefulWidget {
   const PoliceDashboard({super.key});
@@ -120,7 +119,7 @@ class _PoliceDashboardState extends State<PoliceDashboard> {
   }
 }
 
-// ── Placeholder Tabs ─────────────────────────────────────────────────────────
+// Tabs
 class _DispatchTab extends StatelessWidget {
   const _DispatchTab();
   @override
@@ -145,7 +144,7 @@ class _DirectoryTab extends StatelessWidget {
   Widget build(BuildContext context) => const SettingsScreen();
 }
 
-// ── Home / STATUS Screen ─────────────────────────────────────────────────────
+// Screen
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
@@ -210,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  // ── Header ────────────────────────────────────────────────────────────────
+  // Header
   Widget _buildHeader(driver) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
@@ -318,7 +317,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  // ── Status Circle ────────────────────────────────────────────────────────
+  // Status
   Widget _buildStatusCircle() {
     Color statusColor;
     switch (_status) {
@@ -381,7 +380,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  // ── Response Time Card ───────────────────────────────────────────────────
+  // Performance
   Widget _buildResponseTimeCard() {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -417,7 +416,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  // ── Action Grid ──────────────────────────────────────────────────────────
+  // Actions
   Widget _buildActionGrid() {
     final actions = [
       (icon: Icons.shield_outlined, title: 'Patrol Mode', sub: 'DE-ESCALATION', color: _kNavy, nav: null as VoidCallback?),
@@ -467,7 +466,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  // ── Live Incidents ───────────────────────────────────────────────────────
+  // Incidents
   Widget _buildLiveIncidents() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -529,7 +528,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  // ── SOS Button ──────────────────────────────────────────────────────────
+  // Emergency
   Widget _buildSOSButton() {
     return Column(
       children: [
@@ -561,7 +560,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 }
 
-// ── Data Model ───────────────────────────────────────────────────────────────
+// Model
 class _Incident {
   final String title, subtitle, time;
   final Color accentColor;
@@ -569,7 +568,7 @@ class _Incident {
   const _Incident(this.title, this.subtitle, this.time, this.accentColor, this.isCritical);
 }
 
-// ── Custom Painters ──────────────────────────────────────────────────────────
+// Painters
 class _RingPainter extends CustomPainter {
   final Animation<double> anim;
   final Color statusColor;
@@ -633,7 +632,7 @@ class _ArcPainter extends CustomPainter {
   bool shouldRepaint(_) => false;
 }
 
-// ── Map Tab ──────────────────────────────────────────────────────────────────
+// Map
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
   @override
@@ -688,7 +687,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   }
 }
 
-// ── Settings / Directory Tab ─────────────────────────────────────────────────
+// Settings
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
   @override

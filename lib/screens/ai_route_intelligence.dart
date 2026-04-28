@@ -362,7 +362,7 @@ class _AIRouteIntelligencePageState extends State<AIRouteIntelligencePage>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // ── AI Agent Status Strip ──────────────────────────────
+              // AI Status Strip
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -394,7 +394,7 @@ class _AIRouteIntelligencePageState extends State<AIRouteIntelligencePage>
                   ],
                 ),
               ),
-              // ── Navigation Tabs ───────────────────────────────────
+              // Navigation Tabs
               SafeArea(
                 top: false,
                 child: Padding(

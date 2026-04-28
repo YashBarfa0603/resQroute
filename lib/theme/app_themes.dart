@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
-  // ─── CLINICAL SENTINEL DESIGN TOKENS ─────────────────
-  static const Color primaryBlue = Color(0xFF00236F); // Institutional Blue
+  // Tokens
+  static const Color primaryBlue = Color(0xFF00236F);
   static const Color primaryContainer = Color(0xFF1E3A8A);
-  static const Color primaryRed = Color(0xFFBA1A1A);  // Emergency Red (Clinical)
-  static const Color primaryOrange = Color(0xFF4B1C00); // Clinical Tertiary (Fire)
+  static const Color primaryRed = Color(0xFFBA1A1A);
+  static const Color primaryOrange = Color(0xFF4B1C00);
   
-  static const Color bgLight = Color(0xFFF7F9FB);    // Hyper-clean base
+  static const Color bgLight = Color(0xFFF7F9FB);
   static const Color surface = Colors.white;
-  static const Color textDark = Color(0xFF191C1E);   // Ink-like softness
-  static const Color textMuted = Color(0xFF444651);  // on_surface_variant
+  static const Color textDark = Color(0xFF191C1E);
+  static const Color textMuted = Color(0xFF444651);
   
-  static const double radiusLg = 16.0; // lg (1rem)
-  static const double radiusXl = 24.0; // xl (1.5rem)
+  static const double radiusLg = 16.0;
+  static const double radiusXl = 24.0;
 
-  // Glassmorphism constants
+  // Glassmorphism
   static const double glassOpacity = 0.8;
   static const double glassBlur = 24.0;
 

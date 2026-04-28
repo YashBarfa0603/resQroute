@@ -13,7 +13,7 @@ import 'package:res_q_route/screens/dispatch_communications.dart';
 import 'package:res_q_route/screens/destination_selection.dart';
 import 'package:res_q_route/screens/live_navigation.dart';
 
-// ─── Design Tokens ──────────────────────────────────────────────────────────
+// Tokens
 const _kBg = Color(0xFFFBF4EE);
 const _kNavy = Color(0xFF7B3410);
 const _kOrange = Color(0xFFE65100);
@@ -21,7 +21,6 @@ const _kRed = Color(0xFFD32F2F);
 const _kCardBg = Colors.white;
 const _kMuted = Color(0xFF7A6B60);
 const _kAccent = Color(0xFFFF6D00);
-// ────────────────────────────────────────────────────────────────────────────
 
 class FireDashboard extends StatefulWidget {
   const FireDashboard({super.key});
@@ -117,7 +116,7 @@ class _FireDashboardState extends State<FireDashboard> {
   }
 }
 
-// ── Placeholder Tabs ─────────────────────────────────────────────────────────
+// Tabs
 class _DispatchTab extends StatelessWidget {
   const _DispatchTab();
   @override
@@ -139,7 +138,7 @@ class _DirectoryTab extends StatelessWidget {
   Widget build(BuildContext context) => const SettingsScreen();
 }
 
-// ── Home / STATUS Screen ─────────────────────────────────────────────────────
+// Screen
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
@@ -522,7 +521,7 @@ class _FireAlert {
   const _FireAlert(this.title, this.subtitle, this.time, this.accentColor, this.isCritical);
 }
 
-// ── Custom Painters ──────────────────────────────────────────────────────────
+// Painters
 class _RingPainter extends CustomPainter {
   final Animation<double> anim;
   final Color color;
@@ -579,7 +578,7 @@ class _ArcPainter extends CustomPainter {
   bool shouldRepaint(_) => false;
 }
 
-// ── Map Screen ────────────────────────────────────────────────────────────────
+// Map
 class MapScreen extends StatelessWidget {
   const MapScreen({super.key});
   static const _indore = LatLng(22.7196, 75.8577);
@@ -605,7 +604,7 @@ class MapScreen extends StatelessWidget {
   }
 }
 
-// ── Settings / Hydrants Tab ──────────────────────────────────────────────────
+// Settings
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
   @override

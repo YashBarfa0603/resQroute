@@ -46,7 +46,7 @@ class _LiveNavigationPageState extends State<LiveNavigationPage> with TickerProv
     return Scaffold(
       body: Stack(
         children: [
-          // ── Map Layer ──────────────────────────────────────────────────────
+          // Map Layer
           FlutterMap(
             mapController: _mapController,
             options: const MapOptions(
@@ -95,7 +95,7 @@ class _LiveNavigationPageState extends State<LiveNavigationPage> with TickerProv
             ],
           ),
 
-          // ── Glassy HUD ─────────────────────────────────────────────────────
+          // Glassy HUD
           Positioned(
             top: 0, left: 0, right: 0,
             child: ClipRect(
@@ -136,7 +136,7 @@ class _LiveNavigationPageState extends State<LiveNavigationPage> with TickerProv
             ),
           ),
 
-          // ── Bottom Navigation Card ─────────────────────────────────────────
+          // Bottom Navigation Card
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
